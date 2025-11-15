@@ -1,13 +1,25 @@
-const pool = require('../config/db_config');
+const db = require('../config/db_config');
 
-async function getAll() {
-    try {
-        const [rows, fields] = await pool.query('SELECT * FROM users');
-        return rows; 
-    } catch (err) {
-        console.error('❌ Error fetching users:', err);
-        throw err;
-    }
+async function getAll(){
+    let sql = `SELECT id,name,email FROM users`;
+    let [rows] = await db.query(sql);    
+    return rows;
 }
 
-module.exports = { getAll };
+async function getOne(id){
+    let sql = `SELECT id,name,email FROM users WHERE id = ?`;
+    let [result] = await db.query(sql,[id]);    
+    return result[0];
+}
+
+async function deleteOne(id){
+    let sql = `DELETE FROM users WHERE id = ?`;
+    let [result] = await db.query(sql, [id]);
+    return result.affectedRows > 0; // true إذا تم الحذف
+}
+
+module.exports ={
+    getAll,
+    getOne,
+    deleteOne
+}
