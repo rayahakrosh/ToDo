@@ -1,19 +1,13 @@
 const express = require('express');
-require('dotenv').config();
 const db = require('./config/db_config');
 const port = process.env.PORT;
 const api = process.env.HOST;
 const app = express();
-
 app.use(express.static(__dirname));
 app.use(express.json());
 
-app.get('/', (req,res) => {
-    res.sendFile(__dirname + '/public/index.html');
-});
+app.get('/',(req,res)=>{res.sendFile(__dirname+'/public/index.html')})
+app.use('/users',require('./routes/users_R'));
+app.use('/auth',require('./routes/auth_R'));
 
-app.use('/users', require('./routes/users_R'));
-
-app.listen(port, () => {
-    console.log(`http://${api}:${port}`);
-});
+app.listen(port,()=>{console.log(`http://${api}:${port}`)})
