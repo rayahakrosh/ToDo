@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const {getAllUsers,getOneUser,deleteUser} = require('../controller/users_C.js');
-const {isValidId} = require('../middelware/users_MID');
 const {getAllUsers,getOneUser,deleteUser,updateUser} = require('../controller/users_C.js');
 const {isValidId,valuesToEdit} = require('../middelware/users_MID');
 
