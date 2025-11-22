@@ -1,5 +1,4 @@
-const {getAll,getOne,remove} = require('../model/users_M.js');
-const {getAll,getOne,remove,update} = require('../model/users_M.js');1
+const {getAll,getOne,remove,update} = require('../model/users_M.js');
 
 async function getAllUsers(req,res) {
     try{
@@ -52,7 +51,6 @@ async function updateUser(req,res) {
 module.exports={
     getAllUsers,
     getOneUser,
-    deleteUser,
     deleteUser,
     updateUser
 }
