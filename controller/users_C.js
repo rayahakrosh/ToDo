@@ -1,4 +1,5 @@
-const { getAll, getOne, deleteOne } = require('../model/users_M.js');
+const {getAll,getOne,remove} = require('../model/users_M.js');
+const {getAll,getOne,remove,update} = require('../model/users_M.js');1
 
 async function getAllUsers(req,res) {
     try{
@@ -24,20 +25,34 @@ async function getOneUser(req,res) {
     }
 }
 
-async function deleteUser(req, res) {
-    try {
-        let success = await deleteOne(req.id);
-        if (!success) {
-            return res.status(400).json({ message: `User ${req.id} not found!` });
+async function deleteUser(req,res) {
+    try{
+        let affectedRows = await remove(req.id);
+        if(!affectedRows){
+            return res.status(400).json({message:`User ${req.id} not found!`})
         }
-        res.status(200).json({ message: `User ${req.id} deleted successfully` });
-    } catch (err) {
-        res.status(500).json({ message: "Server error" });
+        res.status(200).json({message:"deleted!"});
+    }catch(err){
+        res.status(500).json({message:"Server error"})
+    }
+}
+
+async function updateUser(req,res) {
+    try{
+        let affectedRows = await update(req.id,req.user);
+        if(!affectedRows){
+            return res.status(400).json({message:`User ${req.id} not found!`})
+        }
+        res.status(200).json({message:"updated!"});
+    }catch(err){
+        res.status(500).json({message:"Server error"})
     }
 }
 
 module.exports={
     getAllUsers,
     getOneUser,
-    deleteUser
+    deleteUser,
+    deleteUser,
+    updateUser
 }
