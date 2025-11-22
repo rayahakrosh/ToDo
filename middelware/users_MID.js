@@ -29,6 +29,5 @@ function valuesToEdit(req,res,next){
 
 module.exports = {
     isValidId,
-    isValidId,
     valuesToEdit
 }
