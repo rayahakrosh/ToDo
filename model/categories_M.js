@@ -1,8 +1,8 @@
 const db = require('../config/db_config');
 
-async function getAll(){
-    let sql = `SELECT id,name FROM categories`;
-    let [rows] = await db.query(sql);    
+async function getAll(userId){
+    let sql = `SELECT * FROM categories WHERE user_id = ?`;
+    let [rows] = await db.query(sql,[userId]);    
     return rows;
 }
 
@@ -12,21 +12,28 @@ async function add({name,userId}){
     return result.insertId;
 }
 
-async function getOne(id){
-    let sql = `SELECT id,name FROM categories WHERE id = ?`;
-    let [rows] = await db.query(sql,[id]);    
-    return rows[0];
+async function getOne(catId,userId){
+    let sql = `SELECT * FROM categories WHERE id = ? AND user_id = ?`;
+    let [result] = await db.query(sql,[catId,userId]);    
+    return result[0];
 }
 
-async function remove(id){
-    let sql = `DELETE FROM categories WHERE id = ?`;
-    let [result] = await db.query(sql,[id]);    
+async function remove(catId,userId){
+    let sql = `DELETE FROM categories WHERE id = ? AND user_id = ?`;
+    let [result] = await db.query(sql,[catId,userId]);    
     return result.affectedRows;
 }
 
-module.exports = {
+async function update(catId,userId,newName){
+    let sql = `UPDATE categories SET name = ? WHERE id = ? AND user_id = ?`;
+    let [result] = await db.query(sql,[newName,catId,userId]);    
+    return result.affectedRows;
+}
+
+module.exports ={
     getAll,
     add,
     getOne,
-    remove
+    remove,
+    update
 }
