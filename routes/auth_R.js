@@ -8,3 +8,4 @@ router.post('/reg', valuesToAdd, encrypPass, register);
 router.post('/login', valuesToLogin, login,createJwt);
 
 module.exports = router;
+
